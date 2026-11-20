@@ -1,0 +1,156 @@
+{
+    "productProfiles": {
+        "camisa-lino": {
+            "style": "Formal",
+            "weight": 2
+        },
+        "blazer-estructurado": {
+            "style": "Formal",
+            "weight": 3
+        },
+        "pantalon-recto": {
+            "style": "Oficina",
+            "weight": 2
+        },
+        "reloj-minimal": {
+            "style": "Oficina",
+            "weight": 3
+        },
+        "sneakers-retro": {
+            "style": "Streetwear",
+            "weight": 3
+        },
+        "bolso-urbano": {
+            "style": "Streetwear",
+            "weight": 2
+        },
+        "camiseta-esencial": {
+            "style": "Casual",
+            "weight": 2
+        },
+        "sneakers-clean": {
+            "style": "Casual",
+            "weight": 2
+        }
+    },
+    "categoryFallback": {
+        "Sacos": {
+            "style": "Formal",
+            "weight": 3
+        },
+        "Camisas": {
+            "style": "Formal",
+            "weight": 2
+        },
+        "Pantalones": {
+            "style": "Oficina",
+            "weight": 2
+        },
+        "Accesorios": {
+            "style": "Oficina",
+            "weight": 2
+        },
+        "Zapatillas": {
+            "style": "Streetwear",
+            "weight": 3
+        }
+    },
+    "profiles": {
+        "Formal": {
+            "title": "Formal / Ejecutivo",
+            "description": "Elegancia estructurada y cortes limpios ideales para eventos de gala o reuniones de alto nivel.",
+            "suggestions": [
+                {
+                    "id": "sug-f1",
+                    "name": "Cinturón de cuero genuino",
+                    "category": "Accesorios",
+                    "price": 790
+                },
+                {
+                    "id": "sug-f2",
+                    "name": "Corbata de seda italiana",
+                    "category": "Accesorios",
+                    "price": 650
+                },
+                {
+                    "id": "sug-f3",
+                    "name": "Zapatos Derby de piel",
+                    "category": "Calzado",
+                    "price": 2190
+                }
+            ]
+        },
+        "Oficina": {
+            "title": "Oficina / Smart Casual",
+            "description": "Equilibrio profesional y versátil pensado para jornadas laborales con estilo sobrio.",
+            "suggestions": [
+                {
+                    "id": "sug-o1",
+                    "name": "Portafolio ejecutivo para laptop",
+                    "category": "Accesorios",
+                    "price": 1450
+                },
+                {
+                    "id": "sug-o2",
+                    "name": "Mocasines de gamuza",
+                    "category": "Calzado",
+                    "price": 1890
+                },
+                {
+                    "id": "sug-o3",
+                    "name": "Pañuelo de bolsillo lino",
+                    "category": "Accesorios",
+                    "price": 390
+                }
+            ]
+        },
+        "Streetwear": {
+            "title": "Streetwear / Urbano",
+            "description": "Siluetas relajadas con enfoque en calzado protagonista y accesorios funcionales de ciudad.",
+            "suggestions": [
+                {
+                    "id": "sug-s1",
+                    "name": "Gorra estructurada minimal",
+                    "category": "Accesorios",
+                    "price": 490
+                },
+                {
+                    "id": "sug-s2",
+                    "name": "Crossbody técnico negro",
+                    "category": "Accesorios",
+                    "price": 950
+                },
+                {
+                    "id": "sug-s3",
+                    "name": "Pack calcetines altos rib",
+                    "category": "Complementos",
+                    "price": 290
+                }
+            ]
+        },
+        "Casual": {
+            "title": "Casual Versátil",
+            "description": "Prendas esenciales, frescas y fáciles de combinar para el ritmo cotidiano.",
+            "suggestions": [
+                {
+                    "id": "sug-c1",
+                    "name": "Lentes de sol acetato",
+                    "category": "Accesorios",
+                    "price": 890
+                },
+                {
+                    "id": "sug-c2",
+                    "name": "Tote bag de lona pesada",
+                    "category": "Accesorios",
+                    "price": 550
+                },
+                {
+                    "id": "sug-c3",
+                    "name": "Cinturón tejido trenzado",
+                    "category": "Accesorios",
+                    "price": 520
+                }
+            ]
+        }
+    }
+}
