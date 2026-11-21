@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 const getFallbackGraphic = (title = '', category = '') => {
   const text = `${title} ${category}`.toLowerCase();
 
@@ -75,7 +73,6 @@ const getFallbackGraphic = (title = '', category = '') => {
     );
   }
 
-  // Bolso / Mochila / Tote bag por defecto
   return (
     <svg viewBox="0 0 120 120" className="w-16 h-16 text-zinc-700" fill="none" stroke="currentColor" strokeWidth="2.5">
       <rect x="28" y="44" width="64" height="52" rx="10" className="fill-white" />
@@ -86,8 +83,6 @@ const getFallbackGraphic = (title = '', category = '') => {
 };
 
 const SuggestionCard = ({ item, isSelected, onToggle }) => {
-  const [imgError, setImgError] = useState(false);
-
   const numericPrice =
     typeof item.price === 'string'
       ? parseFloat(item.price.replace(/[^0-9.]/g, '')) || 0
@@ -97,8 +92,6 @@ const SuggestionCard = ({ item, isSelected, onToggle }) => {
   const category = item.category || item.categoria || 'Accesorio';
   const description =
     item.description || item.descripcion || 'Complemento recomendado para potenciar tu outfit.';
-  const rawImage = item.image || item.imagen || '';
-  const hasValidUrl = rawImage.startsWith('http') && rawImage !== 'https://unsplash.com' && !imgError;
 
   return (
     <div
@@ -110,18 +103,9 @@ const SuggestionCard = ({ item, isSelected, onToggle }) => {
     >
       <div>
         <div className="relative h-36 w-full mb-3 overflow-hidden rounded-xl bg-gradient-to-br from-stone-100 to-zinc-200/70 flex items-center justify-center">
-          {hasValidUrl ? (
-            <img
-              src={rawImage}
-              alt={title}
-              onError={() => setImgError(true)}
-              className="h-full w-full object-cover"
-            />
-          ) : (
-            <div className="flex flex-col items-center justify-center">
-              {getFallbackGraphic(title, category)}
-            </div>
-          )}
+          <div className="flex flex-col items-center justify-center">
+            {getFallbackGraphic(title, category)}
+          </div>
 
           <span className="absolute top-2 left-2 bg-white/95 text-zinc-800 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full border border-zinc-200 shadow-2xs">
             {category}
