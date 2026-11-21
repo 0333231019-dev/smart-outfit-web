@@ -124,15 +124,14 @@ const Level3_Suggestions = ({
   const [selectedOutfitItems, setSelectedOutfitItems] = useState([]);
   const [statusMessage, setStatusMessage] = useState(null);
 
-  // Soporta tanto string ("Setup Oficina / Estilo Formal") como objeto SAMPLE_PROFILE ({ title, confidence, description })
   const profileTitle =
     typeof profile === 'object' && profile !== null
-      ? profile.title || 'Estilo Personalizado'
+      ? profile.profileTitle || profile.title || 'Estilo Personalizado'
       : profile || 'Estilo Personalizado';
 
   const profileConfidence =
-    typeof profile === 'object' && profile !== null && profile.confidence
-      ? profile.confidence
+    typeof profile === 'object' && profile !== null && profile.confidence !== undefined
+      ? `${String(profile.confidence).replace('%', '')}%`
       : 'Match ✓';
 
   const profileDescription =
@@ -140,9 +139,14 @@ const Level3_Suggestions = ({
       ? profile.description
       : 'Añade complementos seleccionados según tus prendas vistas para completar tu outfit.';
 
+  const styleToMatch =
+    typeof profile === 'object' && profile !== null
+      ? `${profile.dominantStyle || ''} ${profileTitle}`
+      : String(profileTitle);
+
   const matchedKey =
     Object.keys(FALLBACK_BY_PROFILE).find((key) =>
-      String(profileTitle).toLowerCase().includes(key.toLowerCase())
+      styleToMatch.toLowerCase().includes(key.toLowerCase())
     ) || 'formal';
 
   const itemsToDisplay =
@@ -283,3 +287,57 @@ const Level3_Suggestions = ({
             type="button"
             onClick={() => setStatusMessage('purchased')}
             disabled={!hasItems}
+            className="flex-1 py-2.5 px-4 rounded-full bg-zinc-900 text-white text-xs font-semibold hover:bg-zinc-800 disabled:bg-zinc-300 transition-colors cursor-pointer"
+          >
+            Simular Compra del Outfit →
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setStatusMessage('saved')}
+            disabled={!hasItems}
+            className="py-2.5 px-4 rounded-full bg-white border border-zinc-300 text-zinc-700 text-xs font-semibold hover:bg-zinc-100 disabled:opacity-50 transition-colors cursor-pointer"
+          >
+            Guardar Outfit
+          </button>
+        </div>
+
+        {statusMessage === 'purchased' && (
+          <div className="mt-3 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium text-center">
+            ✓ ¡Compra simulada con éxito! Tu outfit de S/ {grandTotal.toFixed(2)} está listo.
+          </div>
+        )}
+
+        {statusMessage === 'saved' && (
+          <div className="mt-3 p-3 rounded-xl bg-zinc-200/70 text-zinc-800 text-xs font-medium text-center">
+            ★ Combinación guardada en tu lista de deseos.
+          </div>
+        )}
+      </div>
+
+      <div className="flex items-center justify-between pt-2 border-t border-zinc-100">
+        {onBack && (
+          <button
+            type="button"
+            onClick={onBack}
+            className="px-4 py-2 rounded-full border border-zinc-300 text-xs font-medium text-zinc-700 hover:bg-zinc-50 transition-colors cursor-pointer"
+          >
+            ← Volver al perfil
+          </button>
+        )}
+
+        {onReset && (
+          <button
+            type="button"
+            onClick={onReset}
+            className="px-4 py-2 rounded-full bg-zinc-100 text-xs font-medium text-zinc-800 hover:bg-zinc-200 transition-colors cursor-pointer ml-auto"
+          >
+            ↺ Reiniciar flujo
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Level3_Suggestions;
