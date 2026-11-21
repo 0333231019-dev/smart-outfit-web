@@ -2,106 +2,106 @@ import { useState } from 'react';
 import SuggestionCard from '../components/SuggestionCard';
 
 const FALLBACK_BY_PROFILE = {
-  Formal: [
+  formal: [
     {
       id: 'f-1',
       name: 'Cinturón de Cuero Clásico',
-      category: 'Accesorio',
-      price: 85,
+      category: 'formal',
+      price: 85.0,
       description: 'Cuero genuino negro con hebilla metálica pulida.',
       image: 'https://unsplash.com',
     },
     {
       id: 'f-2',
       name: 'Corbata de Seda Slim',
-      category: 'Accesorio',
-      price: 60,
+      category: 'formal',
+      price: 60.0,
       description: 'Corte estilizado ideal para camisas de vestir y blazers.',
       image: 'https://unsplash.com',
     },
     {
       id: 'f-3',
       name: 'Reloj Minimalista',
-      category: 'Relojería',
-      price: 220,
+      category: 'formal',
+      price: 220.0,
       description: 'Esfera limpia con correa de cuero negro.',
       image: 'https://unsplash.com',
     },
   ],
-  Oficina: [
+  sport: [
     {
-      id: 'o-1',
-      name: 'Mochila Ejecutiva Porta Laptop',
-      category: 'Bolso',
-      price: 140,
-      description: 'Compartimento acolchado para laptop de hasta 15.6".',
+      id: 'sp-1',
+      name: 'Mochila Deportiva Ligera',
+      category: 'sport',
+      price: 110.0,
+      description: 'Compartimento ventilado y tela repelente al agua.',
       image: 'https://unsplash.com',
     },
     {
-      id: 'o-2',
-      name: 'Reloj Cronógrafo Ejecutivo',
-      category: 'Relojería',
-      price: 240,
-      description: 'Acero inoxidable resistente para uso diario.',
+      id: 'sp-2',
+      name: 'Gorra Running Transpirable',
+      category: 'sport',
+      price: 45.0,
+      description: 'Secado rápido con ajuste ergonómico.',
       image: 'https://unsplash.com',
     },
     {
-      id: 'o-3',
-      name: 'Lentes Filtro Luz Azul',
-      category: 'Accesorio',
-      price: 95,
-      description: 'Protección visual frente a pantallas de oficina.',
+      id: 'sp-3',
+      name: 'Reloj Deportivo Digital',
+      category: 'sport',
+      price: 150.0,
+      description: 'Cronómetro y resistencia al sudor para entrenamiento.',
       image: 'https://unsplash.com',
     },
   ],
-  Streetwear: [
+  streetwear: [
     {
       id: 's-1',
       name: 'Bolso Crossbody Urbano',
-      category: 'Bolso',
-      price: 75,
+      category: 'streetwear',
+      price: 75.0,
       description: 'Nylon impermeable con correa ajustable.',
       image: 'https://unsplash.com',
     },
     {
       id: 's-2',
       name: 'Gorra Estructurada Negra',
-      category: 'Accesorio',
-      price: 45,
+      category: 'streetwear',
+      price: 45.0,
       description: 'Algodón grueso con cierre metálico trasero.',
       image: 'https://unsplash.com',
     },
     {
       id: 's-3',
       name: 'Cadena de Acero Inoxidable',
-      category: 'Joyería',
-      price: 55,
+      category: 'streetwear',
+      price: 55.0,
       description: 'Eslabones plateados resistentes al agua.',
       image: 'https://unsplash.com',
     },
   ],
-  Casual: [
+  casual: [
     {
       id: 'c-1',
       name: 'Zapatillas Blancas Versátiles',
-      category: 'Calzado',
-      price: 185,
+      category: 'casual',
+      price: 185.0,
       description: 'Diseño minimalista que combina con cualquier look.',
       image: 'https://unsplash.com',
     },
     {
       id: 'c-2',
       name: 'Tote Bag de Lona',
-      category: 'Bolso',
-      price: 65,
+      category: 'casual',
+      price: 65.0,
       description: 'Amplia y ligera para tus salidas diarias.',
       image: 'https://unsplash.com',
     },
     {
       id: 'c-3',
       name: 'Lentes de Sol Clásicos',
-      category: 'Accesorio',
-      price: 89,
+      category: 'casual',
+      price: 89.0,
       description: 'Protección UV400 con marco ligero.',
       image: 'https://unsplash.com',
     },
@@ -115,7 +115,7 @@ const parsePrice = (val) => {
 };
 
 const Level3_Suggestions = ({
-  profile = 'Formal / Ejecutivo',
+  profile = 'Setup Oficina / Estilo Formal',
   suggestions = [],
   viewedProducts = [],
   onReset,
@@ -124,12 +124,26 @@ const Level3_Suggestions = ({
   const [selectedOutfitItems, setSelectedOutfitItems] = useState([]);
   const [statusMessage, setStatusMessage] = useState(null);
 
+  // Soporta tanto string ("Setup Oficina / Estilo Formal") como objeto SAMPLE_PROFILE ({ title, confidence, description })
+  const profileTitle =
+    typeof profile === 'object' && profile !== null
+      ? profile.title || 'Estilo Personalizado'
+      : profile || 'Estilo Personalizado';
+
+  const profileConfidence =
+    typeof profile === 'object' && profile !== null && profile.confidence
+      ? profile.confidence
+      : 'Match ✓';
+
+  const profileDescription =
+    typeof profile === 'object' && profile !== null && profile.description
+      ? profile.description
+      : 'Añade complementos seleccionados según tus prendas vistas para completar tu outfit.';
+
   const matchedKey =
     Object.keys(FALLBACK_BY_PROFILE).find((key) =>
-      String(profile || '')
-        .toLowerCase()
-        .includes(key.toLowerCase())
-    ) || 'Formal';
+      String(profileTitle).toLowerCase().includes(key.toLowerCase())
+    ) || 'formal';
 
   const itemsToDisplay =
     Array.isArray(suggestions) && suggestions.length > 0
@@ -172,15 +186,11 @@ const Level3_Suggestions = ({
           <p className="text-[10px] font-semibold uppercase tracking-widest text-zinc-400">
             PERFIL DETECTADO EN NIVEL 2
           </p>
-          <h3 className="text-lg font-bold mt-0.5">
-            {profile || 'Estilo Personalizado'}
-          </h3>
-          <p className="text-xs text-zinc-300 mt-1">
-            Añade complementos para completar tu combinación ideal.
-          </p>
+          <h3 className="text-lg font-bold mt-0.5">{profileTitle}</h3>
+          <p className="text-xs text-zinc-300 mt-1">{profileDescription}</p>
         </div>
         <span className="bg-zinc-800 border border-zinc-700 text-emerald-400 text-xs font-bold px-3 py-1.5 rounded-xl shrink-0">
-          Match ✓
+          {profileConfidence}
         </span>
       </div>
 
@@ -273,15 +283,3 @@ const Level3_Suggestions = ({
             type="button"
             onClick={() => setStatusMessage('purchased')}
             disabled={!hasItems}
-            className="flex-1 py-2.5 px-4 rounded-full bg-zinc-900 text-white text-xs font-semibold hover:bg-zinc-800 disabled:bg-zinc-300 transition-colors cursor-pointer"
-          >
-            Simular Compra del Outfit →
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setStatusMessage('saved')}
-            disabled={!hasItems}
-            className="py-2.5 px-4 rounded-full bg-white border border-zinc-300 text-zinc-700 text-xs font-semibold hover:bg-zinc-100 disabled:opacity-50 transition-colors cursor-pointer"
-          >
-            Guardar Outfit
