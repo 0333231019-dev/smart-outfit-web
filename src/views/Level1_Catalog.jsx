@@ -10,7 +10,7 @@ const products = [
     rating: '4.9',
     badge: 'MÁS VENDIDO',
     image:
-      'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=900&q=85',
+      'https://unsplash.com',
   },
   {
     id: 'sneakers-retro',
@@ -20,7 +20,7 @@ const products = [
     rating: '4.8',
     badge: 'NUEVO',
     image:
-      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=85',
+      'https://unsplash.com',
   },
   {
     id: 'blazer-estructurado',
@@ -30,7 +30,7 @@ const products = [
     rating: '4.9',
     badge: 'SELECCIÓN',
     image:
-      'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=900&q=85',
+      'https://unsplash.com',
   },
   {
     id: 'bolso-urbano',
@@ -40,7 +40,7 @@ const products = [
     rating: '4.7',
     badge: 'ÚLTIMAS PIEZAS',
     image:
-      'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=85',
+      'https://unsplash.com',
   },
   {
     id: 'pantalon-recto',
@@ -50,7 +50,7 @@ const products = [
     rating: '4.8',
     badge: 'FAVORITO',
     image:
-      'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=900&q=85',
+      'https://unsplash.com',
   },
   {
     id: 'reloj-minimal',
@@ -60,7 +60,7 @@ const products = [
     rating: '4.9',
     badge: 'NUEVO',
     image:
-      'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=85',
+      'https://unsplash.com',
   },
   {
     id: 'camiseta-esencial',
@@ -70,7 +70,7 @@ const products = [
     rating: '4.6',
     badge: 'ESENCIAL',
     image:
-      'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85',
+      'https://unsplash.com',
   },
   {
     id: 'sneakers-clean',
@@ -80,13 +80,13 @@ const products = [
     rating: '4.8',
     badge: 'NUEVO',
     image:
-      'https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=900&q=85',
+      'https://unsplash.com',
   },
 ]
 
 const categories = ['Todo', 'Camisas', 'Zapatillas', 'Sacos', 'Pantalones', 'Accesorios']
 
-function Level1_Catalog({ viewedProducts = [], onAddToViewed = () => {} }) {
+function Level1_Catalog({ viewedProducts = [], onAddToViewed = () => {}, onNext = () => {} }) {
   const [activeCategory, setActiveCategory] = useState('Todo')
   const [search, setSearch] = useState('')
   const viewedIds = new Set(viewedProducts.map((product) => product.id))
@@ -108,7 +108,7 @@ function Level1_Catalog({ viewedProducts = [], onAddToViewed = () => {} }) {
   return (
     <main className="storefront">
       <div className="announcement">
-        <span>Envío gratis en compras mayores a $1,999</span>
+        <span>Envío gratis en compras mayores a S/ 1,999</span>
         <span className="announcement__separator">·</span>
         <span>Tu estilo, a tu manera</span>
       </div>
@@ -128,7 +128,12 @@ function Level1_Catalog({ viewedProducts = [], onAddToViewed = () => {} }) {
             Colecciones
           </a>
         </nav>
-        <a className="viewed-link" href="#catalogo" aria-label={`${viewedProducts.length} artículos vistos`}>
+        <button
+          type="button"
+          onClick={onNext}
+          className="viewed-link cursor-pointer"
+          aria-label={`Analizar ${viewedProducts.length} artículos vistos`}
+        >
           <svg
             aria-hidden="true"
             viewBox="0 0 24 24"
@@ -141,7 +146,7 @@ function Level1_Catalog({ viewedProducts = [], onAddToViewed = () => {} }) {
           </svg>
           <span>Vistos</span>
           <span className="viewed-link__count">{viewedProducts.length}</span>
-        </a>
+        </button>
       </header>
 
       <section className="hero" id="inicio">
@@ -249,13 +254,17 @@ function Level1_Catalog({ viewedProducts = [], onAddToViewed = () => {} }) {
             </button>
           </div>
         )}
-      </section>
 
-      <footer className="site-footer">
-        <a className="wordmark" href="#inicio">nómada<span>.</span></a>
-        <p>Encuentra tu forma de vestir.</p>
-        <span>Hecho para descubrir — 2026</span>
-      </footer>
+        <div className="mt-8 pt-6 border-t border-zinc-200 flex justify-end">
+          <button
+            type="button"
+            onClick={onNext}
+            className="px-6 py-3 rounded-full bg-zinc-900 text-white text-sm font-semibold hover:bg-zinc-800 transition-colors cursor-pointer"
+          >
+            Analizar mi perfil ({viewedProducts.length}) →
+          </button>
+        </div>
+      </section>
     </main>
   )
 }
