@@ -9,15 +9,15 @@ function App() {
   const [currentStep, setCurrentStep] = useState(1);
   const [detectedProfile, setDetectedProfile] = useState(null);
 
-  function addToViewed(product) {
-    setViewedProducts((currentProducts) =>
-      currentProducts.some((item) => item.id === product.id)
-        ? currentProducts
-        : [...currentProducts, product]
-    );
-  }
+function addToViewed(product) {
+  setViewedProducts((currentProducts) =>
+    currentProducts.some((item) => item.id === product.id)
+      ? currentProducts.filter((item) => item.id !== product.id)
+      : [...currentProducts, product]
+  );
+}
 
-  const handleCompleteLevel1 = () => {
+const handleCompleteLevel1 = () => {
     setCurrentStep(2);
   };
 
